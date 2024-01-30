@@ -25,7 +25,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const { request } = require('http');
 
-
+s
 //Instanciando o express (cria um objeto "app" tendo referencia a classe do express)
 const app = express();
 
@@ -52,7 +52,7 @@ app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response,
 });
 
 //Endpoint: Listar os filmes e suas informações com base em um critério(id)
-app.get('/v1/AcmeFilmes/ListarFilme', cors(), async function(request, response, next){
+app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response, next){
     let id = request.query.id
     let controleListaFilmes = require('./controller/function.js')
     let filmes = controleListaFilmes.getFilme(id);
@@ -69,4 +69,12 @@ app.get('/v1/AcmeFilmes/ListarFilme', cors(), async function(request, response, 
 //Executando a API e fazendo ela ficar aguardando requisições
 app.listen(8080, function(){
     console.log('API funcionando e aguardando requisições.')
-});
+}); 
+
+
+
+
+// Database : db_acme_filmes_turma_aa
+//View: saída de dado, que saí pro usuário, frontend
+//Controller: regra de negócio = entrada  e saída de dados na aplicação, validações, conversões
+//Model: Acesso a dados, banco, conexão com o banco, orinetação ao objetoss
