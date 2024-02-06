@@ -17,6 +17,20 @@
  * Post - Envia dados novos;
  * Put - Altera dados existentes;
  * Delete - Apaga dados existentes;
+ * 
+ * Integração Banco de Dados
+ *  É necessário uma biblioteca:
+ *  SEQUELIZE ORM (mais antiga)
+ *  PRISMA ORM (mais atual)
+ *  FASTFY ORM (mais atual)
+ * 
+ * Instalação do PRISMA ORM
+ *  npm install [] --save
+ *  prisma - Realiza a conexão com o Banco de Dados
+ *  @prisma/client - Executa os scripts SQL no Banco de Dados 
+ * 
+ * Inicializa o uso do prisma
+ *  npx prisma init
  ***************************/
 
 //Importando as bibliotecas instaladas para o projeto
@@ -43,7 +57,7 @@ app.use((request, response, next) => {
 
 })
 
-//EndPoint: Listar todos os filmes;
+//EndPoint: Listar todos os filmes do arquivo JSON;
 app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response, next){
     let controleListaFilmes = require('./controller/function.js')
     let filmes = controleListaFilmes.getListaDeFilmes();
@@ -65,6 +79,27 @@ app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response,
         response.json({erro:'Não foi possível encontrar um item.'})
     }
 });
+
+
+//Import dos arquivos internos do projeto
+const controllerFilmes = require('./controller/controller_filme.js');
+
+//EndPoint: Listar todos os filmes do banco de dados;
+app.get('/v2/acmefilmes/filmes', cors(), async function(request, response, next){
+
+    //Chama a função para retornar os dados de filmes
+    let dadosFilmes = await controllerFilmes.getListarFilmes();
+
+    //Validação para retornar os dados ou o erro
+    if(dadosFilmes){
+        response.json(dadosFilmes);
+        response.status(200);
+    } else{
+        response.json({erro:'Nenhum registro encontrado.'})
+        response.status(404)
+    }
+});
+
 
 //Executando a API e fazendo ela ficar aguardando requisições
 app.listen(8080, function(){
