@@ -72,10 +72,29 @@ const selectByIdFilme = async function (id) {
 
 }
 
+//Função para retornar um filme a partir de um critério (Nome) no banco de dados
+const selectByNameFilme = async function (nome) {
+
+    try {
+        //Pesquisar o filme por nome
+        let sql = `select * from tbl_filme where nome like "%${nome}%"`;
+        let rsFilme = await prisma.$queryRawUnsafe(sql);
+        console.log(sql)
+
+        return rsFilme;
+
+
+    } catch (error) {
+        return false
+    }
+
+}
+
 module.exports = {
     insertNovoFilme,
     updateFilme,
     deleteFilme,
     selectAllFilmes,
-    selectByIdFilme
+    selectByIdFilme,
+    selectByNameFilme
 }
