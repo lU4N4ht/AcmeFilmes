@@ -18,9 +18,63 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 
-//Função para inserir um novo filme no banco de dados
-const insertNovoFilme = async function () {
 
+//Função para inserir um novo filme no banco de dados
+const insertFilme = async function (dadosFilme) {
+
+    try {
+
+        let sql;
+
+        //Vlidação para ver se a data de relançamento é vazia (null), já que a tratativa para o banco é diferente   [P R O V I S Ó R I O]
+        if (dadosFilme.data_relancamento == null || dadosFilme.data_relancamento == undefined || dadosFilme.data_relancamento == ' ') {
+            sql = `insert into tbl_filme(nome,
+            sinopse,
+            duracao,
+            data_lancamento,
+            data_relancamento,
+            foto_capa,
+            valor_unitario
+            ) values (
+               '${dadosFilme.nome}',                            
+               '${dadosFilme.sinopse}',                            
+               '${dadosFilme.duracao}',                            
+               '${dadosFilme.data_lancamento}',                            
+                null,                            
+               '${dadosFilme.foto_capa}',                            
+               '${dadosFilme.valor_unitario}'                            
+                      )`
+        } else {
+            sql = `insert into tbl_filme(nome,
+            sinopse,
+            duracao,
+            data_lancamento,
+            data_relancamento,
+            foto_capa,
+            valor_unitario
+            ) values (
+               '${dadosFilme.nome}',                            
+               '${dadosFilme.sinopse}',                            
+               '${dadosFilme.duracao}',                            
+               '${dadosFilme.data_lancamento}',                            
+               '${dadosFilme.data_relancamento}',                            
+               '${dadosFilme.foto_capa}',                            
+               '${dadosFilme.valor_unitario}'                            
+                      )`
+        }
+
+
+        //mudou de query para execute pq nao devolve valor
+        let result = await prisma.$executeRawUnsafe(sql);
+
+        if (result) {
+            return true
+        } else {
+            return false
+        }
+    } catch(error){
+        return false;
+    }
 }
 
 //Função para atualizar um filme existente no banco de dados
@@ -91,7 +145,7 @@ const selectByNameFilme = async function (nome) {
 }
 
 module.exports = {
-    insertNovoFilme,
+    insertFilme,
     updateFilme,
     deleteFilme,
     selectAllFilmes,

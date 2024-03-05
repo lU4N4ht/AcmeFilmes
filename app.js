@@ -47,7 +47,7 @@ app.use((request, response, next) => {
     //Configura quem poderá fazer requisições na API (* - libera para todos | IP restringe o acesso)
     response.header('Access-Control-Allow-Origin', '*')
     //Libera/Configura os métodos que poderão ser usados na API
-    response.header('Access-Control-Allow-Methods', 'Get')
+    response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     
     app.use(cors());
 
@@ -56,28 +56,30 @@ app.use((request, response, next) => {
 
 })
 
-//EndPoint: Listar todos os filmes do arquivo JSON;
-app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response, next){
-    let controleListaFilmes = require('./controller/function.js')
-    let filmes = controleListaFilmes.getListaDeFilmes();
-    response.json(filmes);
-    response.status(200);
-});
+const bodyParserJSON = bodyParser.json();
 
-//Endpoint: Listar os filmes e suas informações com base em um critério(id)
-app.get('/v1/AcmeFilmes/ListarFilme', cors(), async function(request, response, next){
-    let id = request.query.id
-    let controleListaFilmes = require('./controller/function.js')
-    let filmes = controleListaFilmes.getFilme(id);
+// //EndPoint: Listar todos os filmes do arquivo JSON;
+// app.get('/v1/AcmeFilmes/ListarFilmes', cors(), async function(request, response, next){
+//     let controleListaFilmes = require('./controller/function.js')
+//     let filmes = controleListaFilmes.getListaDeFilmes();
+//     response.json(filmes);
+//     response.status(200);
+// });
 
-    if(filmes){
-        response.json(filmes);
-        response.status(200);
-    } else{
-        response.status(404)
-        response.json({erro:'Não foi possível encontrar um item.'})
-    }
-});
+// //Endpoint: Listar os filmes e suas informações com base em um critério(id)
+// app.get('/v1/AcmeFilmes/ListarFilme', cors(), async function(request, response, next){
+//     let id = request.query.id
+//     let controleListaFilmes = require('./controller/function.js')
+//     let filmes = controleListaFilmes.getFilme(id);
+
+//     if(filmes){
+//         response.json(filmes);
+//         response.status(200);
+//     } else{
+//         response.status(404)
+//         response.json({erro:'Não foi possível encontrar um item.'})
+//     }
+// });
 
 
 //Import dos arquivos internos do projeto
@@ -118,6 +120,16 @@ app.get('/v2/acmefilmes/filtro/filme', cors(), async function(request, response,
 
 });
 
+
+app.post('/v2/acmefilmes/filme', cors(), bodyParserJSON, async function(request, response, next){
+    let dadosBody = request.body;
+
+    let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+
+})
 
 //Executando a API e fazendo ela ficar aguardando requisições
 app.listen(8080, function(){
