@@ -12,7 +12,9 @@ const ERROR_INVALID_ID = {status: false, status_code: 400, message:'O ID encamin
 const ERROR_INVALID_QUERY = {status: false, status_code: 400, message:'A query encaminhada na requisição não é válido!'}
 const ERROR_NOT_FOUND = {status: false, status_code: 404, message:'Nenhum item encontrado na requisição!'}
 const ERROR_INTERNAL_SERVER_DB = {status: false, status_code: 500, message:'Ocorreram erros no processamento do Banco de dados! Contate o administrador da API.'}
+const ERROR_INTERNAL_SERVER = {status: false, status_code: 500, message:'Ocorreram erros no servidor Back-end na camada de serviços, portanto não foi possível processar a requisição!!'}
 const ERROR_REQUIRED_FILDS = {status: false, status_code: 400, message:'Ocorreram erros no preenchimento de dados.'}
+const ERROR_CONTENT_TYPE = {status: false, status_code: 415, message:'O content type da reqisição não é válido. Deve-se encaminhar dados em formato application/json'}
 
 
 
@@ -26,5 +28,7 @@ module.exports = {
     ERROR_INTERNAL_SERVER_DB,
     ERROR_INVALID_QUERY,
     ERROR_REQUIRED_FILDS,
-    SUCCESS_CREATED_ITEM
+    SUCCESS_CREATED_ITEM,
+    ERROR_CONTENT_TYPE,
+    ERROR_INTERNAL_SERVER
 }

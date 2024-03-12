@@ -72,7 +72,7 @@ const insertFilme = async function (dadosFilme) {
         } else {
             return false
         }
-    } catch(error){
+    } catch (error) {
         return false;
     }
 }
@@ -91,21 +91,25 @@ const deleteFilme = async function () {
 //Função para listar todos os filmes existentes no banco de dados
 const selectAllFilmes = async function () {
 
+
     /************************************************************************
      *    $queryRawUnsafe(sql) - Encaminha uma variável
      *    $queryRaw('select * from tbl_filme') - Encaminha direto o script
      *************************************************************************/
 
     try {
-        let sql = 'select * from tbl_filme'
+        let sql = 'select * from tbl_filme';
+
         //rs = result (resultado do banco)
         //Executa o scriptSQL no BD e guarda o retorno dos dados
         let rsFilmes = await prisma.$queryRawUnsafe(sql);
 
         return rsFilmes;
 
+
     } catch (error) {
-        return false
+
+       return false
     }
 }
 
@@ -144,11 +148,31 @@ const selectByNameFilme = async function (nome) {
 
 }
 
+
+//Função para listar o ID do  filme registrado
+const selectIdFilme = async function () {
+
+    try {
+        let sql = 'select cast(id as decimal) from tbl_filme order by id desc limit 1';
+
+        let rsId = await prisma.$queryRawUnsafe(sql);
+
+        return rsId;
+
+
+    } catch (error) {
+
+        return false
+    }
+}
+
+
 module.exports = {
     insertFilme,
     updateFilme,
     deleteFilme,
     selectAllFilmes,
     selectByIdFilme,
-    selectByNameFilme
+    selectByNameFilme,
+    selectIdFilme
 }
