@@ -78,15 +78,29 @@ const insertFilme = async function (dadosFilme) {
 }
 
 //Função para atualizar um filme existente no banco de dados
-const updateFilme = async function () {
+const updateFilme = async function (dadosFilme, id) {
+    try{
+        let sql = `UPDATE tbl_flime SET `
 
+    } catch(error){
+
+    }
 }
 
 //Função para deletar um filme existente no banco de dados
-const deleteFilme = async function () {
+const deleteFilme = async function (id) {
+try {
+    //Pesquisar o filme por id
+    let sql = `delete from tbl_filme where tbl_filme.id = ${id}`;
+    let rsFilme = await prisma.$queryRawUnsafe(sql);
 
+    return rsFilme;
+
+} catch (error) {
+    return false
 }
 
+}
 
 //Função para listar todos os filmes existentes no banco de dados
 const selectAllFilmes = async function () {
@@ -166,6 +180,23 @@ const selectIdFilme = async function () {
     }
 }
 
+const selectAllIds = async function (){
+    let jsonId = {};
+    try {
+        let sql = 'select tbl_filme.id from tbl_filme order by id';
+
+        let rsId = await prisma.$queryRawUnsafe(sql);
+
+       jsonId.ids = rsId;
+       
+       return jsonId
+
+
+    } catch (error) {
+
+        return false
+    }
+}
 
 module.exports = {
     insertFilme,
@@ -174,5 +205,6 @@ module.exports = {
     selectAllFilmes,
     selectByIdFilme,
     selectByNameFilme,
-    selectIdFilme
+    selectIdFilme,
+    selectAllIds
 }

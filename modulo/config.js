@@ -21,6 +21,7 @@ const ERROR_CONTENT_TYPE = {status: false, status_code: 415, message:'O content 
 
 /*********************************************** MENSAGENS DE SUCESSO ************************************************ */
 const SUCCESS_CREATED_ITEM = {status: true, status_code: 201, message:'Item criado com sucesso.'}
+const SUCCESS_DELETED_ITEM = {status: true, status_code: 201, message:'Item deletado com sucesso.'}
 
 module.exports = {
     ERROR_INVALID_ID,
@@ -30,5 +31,6 @@ module.exports = {
     ERROR_REQUIRED_FILDS,
     SUCCESS_CREATED_ITEM,
     ERROR_CONTENT_TYPE,
-    ERROR_INTERNAL_SERVER
+    ERROR_INTERNAL_SERVER,
+    SUCCESS_DELETED_ITEM
 }

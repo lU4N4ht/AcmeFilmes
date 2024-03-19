@@ -83,7 +83,31 @@ const setAtualizarFilme = async function () {
 }
 
 //Função para deletar um filme existente
-const setExcluirFilme = async function () {
+const setExcluirFilme = async function (id) {
+    let idFilme = id;
+    let validarId = await filmesDAO.selectAllIds();
+
+    if (idFilme == '' || idFilme == undefined || isNaN(idFilme)) {
+        return message.ERROR_INVALID_ID
+    } else {
+
+        if (validarId.ids.map(idFilme)) {
+            //Encaminha o ID para o DAO
+            let dadosFilme = await filmesDAO.deleteFilme(idFilme);
+
+            //Validação para verificar se o DAO retornou dados
+            if (dadosFilme) {
+                return message.SUCCESS_DELETED_ITEM
+
+            } else {
+                return message.ERROR_INTERNAL_SERVER_DB;
+            }
+        } else {
+            return message.ERROR_NOT_FOUND
+        }
+
+
+    }
 
 }
 
