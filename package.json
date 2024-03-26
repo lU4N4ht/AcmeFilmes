@@ -11,6 +11,7 @@
     "node": "18"
   },
   "scripts": {
+    "build": "npm install",
     "start": "node app.js"
   }
 }
