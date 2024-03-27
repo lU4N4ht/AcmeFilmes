@@ -101,6 +101,22 @@ app.get('/v2/acmefilmes/filmes', cors(), async function(request, response, next)
     }
 });
 
+//EndPoint: Listar todos os usuarios do banco de dados;
+app.get('/v2/acmefilmes/usuarios', cors(), async function(request, response, next){
+
+    //Chama a função para retornar os dados de filmes
+    let dadosUsuarios = await controllerFilmes.getListarUsuarios();
+
+    //Validação para retornar os dados ou o erro
+    if(dadosUsuarios){
+        response.json(dadosUsuarios);
+        response.status(200);
+    } else{
+        response.json({erro:'Nenhum registro encontrado.'})
+        response.status(404)
+    }
+});
+
 //EndPoint: Listar os filmes e suas informações com base em um critério(id)
 app.get('/v2/acmefilmes/filme/:id', cors(), async function(request, response, next){
     let idFilme = request.params.id

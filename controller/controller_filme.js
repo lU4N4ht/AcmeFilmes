@@ -85,13 +85,14 @@ const setAtualizarFilme = async function () {
 //Função para deletar um filme existente
 const setExcluirFilme = async function (id) {
     let idFilme = id;
-    let validarId = await filmesDAO.selectAllIds();
 
     if (idFilme == '' || idFilme == undefined || isNaN(idFilme)) {
         return message.ERROR_INVALID_ID
     } else {
 
-        if (validarId.ids.map(idFilme)) {
+        let rsFilmeId = await filmesDAO.selectByIdFilme(idFilme)
+
+        if (rsFilmeId.length > 0) {
             //Encaminha o ID para o DAO
             let dadosFilme = await filmesDAO.deleteFilme(idFilme);
 
@@ -196,12 +197,39 @@ const getBuscarNomeFilme = async function (nome) {
     }
 }
 
+//Função para listar todos os usuários existentes
+const getListarUsuarios = async function () {
+
+    //Cria o objeto JSON 
+    let usuariosJSON = {};
+
+    //Chama a função do DAO para retorar os dados do banco
+    let dadosUsuarios = await filmesDAO.selectAllUsuarios();
+
+    //Validação para criar JSON dos dados
+    if (dadosUsuarios) {
+        if (dadosUsuarios.length > 0) {
+            //Cria JSON de retorno do dados
+            usuariosJSON.usuario = dadosUsuarios;
+            usuariosJSON.quantidade = dadosUsuarios.length;
+            usuariosJSON.status_code = 200;
+            return usuariosJSON
+        } else {
+            return message.ERROR_NOT_FOUND
+        }
+
+    } else {
+        return message.ERROR_INTERNAL_SERVER_DB;
+    }
+}
+
 module.exports = {
     setInserirNovoFilme,
     setAtualizarFilme,
     setExcluirFilme,
     getListarFilmes,
     getBuscarFilme,
-    getBuscarNomeFilme
+    getBuscarNomeFilme,
+    getListarUsuarios
 }
 

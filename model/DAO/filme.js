@@ -198,6 +198,23 @@ const selectAllIds = async function (){
     }
 }
 
+const selectAllUsuarios = async function () {
+
+    try {
+        let sql = 'select * from tbl_usuarios';
+
+    
+        let rsUsuarios = await prisma.$queryRawUnsafe(sql);
+
+        return rsUsuarios;
+
+
+    } catch (error) {
+
+       return false
+    }
+}
+
 module.exports = {
     insertFilme,
     updateFilme,
@@ -206,5 +223,6 @@ module.exports = {
     selectByIdFilme,
     selectByNameFilme,
     selectIdFilme,
-    selectAllIds
+    selectAllIds,
+    selectAllUsuarios
 }
