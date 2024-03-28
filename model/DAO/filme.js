@@ -20,7 +20,7 @@ const prisma = new PrismaClient();
 
 
 //Função para inserir um novo filme no banco de dados
-const insertFilme = async function (dadosFilme) {
+const insertFilme = async function(dadosFilme) {
 
     try {
 
@@ -78,32 +78,32 @@ const insertFilme = async function (dadosFilme) {
 }
 
 //Função para atualizar um filme existente no banco de dados
-const updateFilme = async function (dadosFilme, id) {
-    try{
+const updateFilme = async function(dadosFilme, id) {
+    try {
         let sql = `UPDATE tbl_flime SET `
 
-    } catch(error){
+    } catch (error) {
 
     }
 }
 
 //Função para deletar um filme existente no banco de dados
-const deleteFilme = async function (id) {
-try {
-    //Pesquisar o filme por id
-    let sql = `delete from tbl_filme where tbl_filme.id = ${id}`;
-    let rsFilme = await prisma.$queryRawUnsafe(sql);
+const deleteFilme = async function(id) {
+    try {
+        //Pesquisar o filme por id
+        let sql = `delete from tbl_filme where tbl_filme.id = ${id}`;
+        let rsFilme = await prisma.$queryRawUnsafe(sql);
 
-    return rsFilme;
+        return rsFilme;
 
-} catch (error) {
-    return false
-}
+    } catch (error) {
+        return false
+    }
 
 }
 
 //Função para listar todos os filmes existentes no banco de dados
-const selectAllFilmes = async function () {
+const selectAllFilmes = async function() {
 
 
     /************************************************************************
@@ -123,13 +123,13 @@ const selectAllFilmes = async function () {
 
     } catch (error) {
 
-       return false
+        return false
     }
 }
 
 
 //Função para retornar um filme a partir de um critério (ID) no banco de dados
-const selectByIdFilme = async function (id) {
+const selectByIdFilme = async function(id) {
 
     try {
         //Pesquisar o filme por id
@@ -145,7 +145,7 @@ const selectByIdFilme = async function (id) {
 }
 
 //Função para retornar um filme a partir de um critério (Nome) no banco de dados
-const selectByNameFilme = async function (nome) {
+const selectByNameFilme = async function(nome) {
 
     try {
         //Pesquisar o filme por nome
@@ -164,7 +164,7 @@ const selectByNameFilme = async function (nome) {
 
 
 //Função para listar o ID do  filme registrado
-const selectIdFilme = async function () {
+const selectIdFilme = async function() {
 
     try {
         let sql = 'select cast(id as decimal) from tbl_filme order by id desc limit 1';
@@ -180,16 +180,16 @@ const selectIdFilme = async function () {
     }
 }
 
-const selectAllIds = async function (){
+const selectAllIds = async function() {
     let jsonId = {};
     try {
         let sql = 'select tbl_filme.id from tbl_filme order by id';
 
         let rsId = await prisma.$queryRawUnsafe(sql);
 
-       jsonId.ids = rsId;
-       
-       return jsonId
+        jsonId.ids = rsId;
+
+        return jsonId
 
 
     } catch (error) {
@@ -198,12 +198,12 @@ const selectAllIds = async function (){
     }
 }
 
-const selectAllUsuarios = async function () {
+const selectAllUsuarios = async function() {
 
     try {
-        let sql = 'select * from tbl_usuarios';
+        let sql = 'select * from tbl_usuario';
 
-    
+
         let rsUsuarios = await prisma.$queryRawUnsafe(sql);
 
         return rsUsuarios;
@@ -211,7 +211,7 @@ const selectAllUsuarios = async function () {
 
     } catch (error) {
 
-       return false
+        return false
     }
 }
 
